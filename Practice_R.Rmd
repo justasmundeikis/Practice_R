@@ -1,0 +1,780 @@
+---
+title: "Practice R"
+author: | 
+  | Justas Mundeikis
+  | Data-Science.lt
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document:
+    toc: false
+    number_sections: true
+    includes:
+      in_header: header.txt
+  html_document:
+    toc: true
+    df_print: paged
+    number_sections: true
+documentclass: article
+classoption: a4paper
+fontsize: 10pt
+geometry: margin=2cm
+linkReferences: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
+```
+# Introduction
+
+...
+
+
+# Data structures
+
+## Vectors
+A vector is the most basic data structure in R. It contains only elements of the same type:
+* character elements ("name", "grade" "a","b", "c")
+* integer elements (1, 2, 3L)
+* numerical elements (1.1, -0.1,9.999)
+* booleen elements (TRUE, FALSE)
+* complex (1+i)
+* raw ()
+
+Vectors are usually created using the function `c()` [=`concatenate`].
+Vectors can be assigned in multiple ways to an object, either by using `<-` operator,
+by using `=` operator (not suggested to use this), or by using the `assign()` function.
+
+The type of vector can allways be checked using the function: `typeof()`.
+The number of elements of a vector can be checked using the function `length()`
+
+A vector consisting of multiple vectors containing the same type of elements can also be created using `c()`.
+
+```{r}
+# Example
+## creating vectors
+x <- c(1.1,2.2,3.3,4.4,5.5)
+y = c("a", "b", "c", "d")
+assign("z", c(1,2,3,4,5))
+
+## checking the type of vectors
+typeof(x)
+typeof(y)
+typeof(z)
+
+## checking the number of elements in the vectors
+length(x)
+length(y)
+length(z)
+
+a <- c(1,2,3,4,5)
+b <- c(6,7,8,9,10)
+c <- c(a,b) #a and b denote object, thus no ".."
+print(c)
+```
+
+## Vector with a sequence of numbers
+There are few different ways how to create a vector with a number sequence. The easiest way is to create an integer vector using `:`
+```{r}
+# integer sequence from 1 to 10
+1:10
+# is the same as
+c(1,2,3,4,5,6,7,8,9,10)
+```
+
+More advanced way is tu use the function `seq()`. Run the command in the console `?seq` to see the function manual page.
+Here are some examples of possible `seq()` usage:
+
+```{r}
+# read the manual page
+?seq
+
+#examples
+seq(from=1, to=5)
+seq(from=0, to=5, by=0.25 )
+seq(from=0, to=1, length.out=6)
+x <- c("a", "b", "c")
+seq(along.with=x )
+seq(from=9) # the same as 1:10, or seq(from=1, to=10)
+seq(length.out=5.5)
+
+```
+
+## Repetition 
+
+`?rep`
+
+```{r}
+
+x <- 1:5
+y <- c("a", "b", "c")
+rep(x,times=2)
+rep(x, each=2)
+rep(y, length.out=5)
+
+
+```
+
+
+
+### Questions
+
+1. Create / print a single number vector with the numerical element of `99`
+2. Create a numerical vector with even number up to 10.
+3. Create a numerical vector with numbers / integers 1 to 50 
+Explain what do the numbers in square brackets at the beginning of every reported line mean?
+4. Concatenate three vectors: a containing integers from 1 to 10, 
+b containing integers from 11 to 20, 
+c containing integers from 21 to 30 by using the function `seq` or `x:x` to a new vector `d`
+
+### Solutions
+```{r}
+# 1.
+99
+
+# 2
+c(2,4,6,8,10)
+
+# 3
+# first alternative
+seq(from=1, to=50)
+# second alternative
+1:50
+# third alternative 
+# c(1,2,3,4,...,100) manual entry by hand
+
+# the number in the brackets at the beginning of each line implicates 
+# the number of the element in the vector.
+
+# 4
+a <- seq(from=1, to=10, by=1)
+b <- seq(from=11, to=20, by=1)
+c <- seq(from=21, to=30, by=1)
+d <- c(a,b,c)
+print(d)
+```
+
+## Vector with a sequance of letters
+
+
+```{r}
+letters
+LETTERS
+```
+
+
+## Vectoriced operations
+
+In R all operations are executed in vectorized form, for example addint two vectors `c(1,2,3)` and `c(4,5,6)` will
+result in a vector, where each element willl be added elementwise in the vector resutling in `c(5,7,9)`
+
+Basic arithmetic operators are:
+* `+` addition
+* `-` subtraction
+* `*` multiplication
+* `/` division
+* `^` or `**` exponentiation
+* `x %% y` modulus (x mod y) is the integer remainder. usefel for cheking if a number is odd
+* `x %/% y` integer division
+
+
+```{r}
+a <- c(1,2,3)
+b <- c(3,4,5)
+
+a+b
+a-b
+a*b
+a/b
+a^b
+3 %% 2 # 3 pizza pieces divided by 2 persons, 1 piece remains
+17 %% 2 # if remainder =1, then the number is odd, else even
+b %% a
+10 %/% 3
+b %/% a
+
+```
+
+
+
+
+### Exercises
+
+1. Create two vectors a with a sequence of 1 to 5 and b with a sequence of 5 to 10 try all mathematical operators with tese two vectors.
+
+2. Create a new object c by assigning the following arithmetical operation to it using vectors a and b from previous excersise: add to each element of vector `b` 5, then multiple each element by 3, then  and divide the reuslting vector by the vector a.
+
+3. Substituting, prove that the square  of c which is equals to the sum of vectors a and b is the same as squaring the sum of vectors a and b. 
+
+
+### Solutions:
+
+```{r}
+a <- seq(from=1, to=5, by=1)
+b <- seq(from=6, to=10, by=1)
+
+a+b
+a-b
+a*b
+a/b
+a^b
+b %% a
+b %/% a
+
+
+c <- ((b+5)*3)/a
+print(c)
+
+c <- a+b
+c^2
+(a+b)^2
+# proof
+c^2==(a+b)^2
+
+```
+
+
+## Vectors to formulas
+
+Mathematical predefined values / formulas:
+
+* `pi`
+* `exp()`
+* `sqrt()`
+* `abs()`
+* `log()` see `?log`
+
+It is quite simple using simple assign operations and mathematical operations to translate  mathematical formulas.
+
+The radius of a circle is given by a formula $$ Radius=\sqrt{\frac{Area}{\pi}} $$
+Lets assume the area is given and equals 30. R knows what $\pi$ is.
+
+```{r}
+# cheking the value for pi
+pi
+# defining area
+a <- 30
+# creating formula for radius
+r <- sqrt(a/pi)
+# prining the radius resula
+print(r)
+```
+
+### Exercises:
+
+1. The normally distributed density function has the equation $$f(x)=\frac{1}{\sigma\sqrt{2 \pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}$$.
+
+Given the mean ($\mu=0$) and the standard deviation ($\sigma=1$) calculate the probability of $x=1.96$
+
+2. Now instead of using single value for `x`, use a vector with a sequence from -5 to 5 by 0.1 steps. Instead of printing the result `print()` use the function `plot(x=x, y=pdf)`.
+
+3. Use the modulo operator `%%` to find out for which of the following pairs, the first number is a multiple of the second 
+* 24025, 115
+* 61988, 98
+* 2555, 245
+* 68719476736, 8
+
+```{r}
+# defining  variables
+mu <- 0
+sigma <- 1
+x <- 1.96
+#defining formula
+pdf <- 1/(sigma*sqrt(2*pi))*exp(-1/2*((x-mu)/sigma)^2)
+# print the pdf
+print(pdf)
+
+```
+
+
+```{r}
+# defining  variables
+mu <- 0
+sigma <- 1
+x <- seq(from=-5, to=5, by=0.1)
+#defining formula
+pdf <- 1/(sigma*sqrt(2*pi))*exp(-1/2*((x-mu)/sigma)^2)
+# print the pdf
+plot(x=x, y=pdf)
+```
+
+
+```{r}
+24025  %% 115
+61988 %% 98
+2555 %% 245
+68719476736 %% 8
+
+```
+
+3. You think of taking a mortgage at a bank. The mortgage size (principle - P) equals 100000. Currently the annual interest rate of Euribor equals 6 \% (monthly interest rate =0.06/12=0.005). You would like to repay the mortgage in 15 years (15*12=180 months). You would like to know what monthly payments of size M you have to pay. The formula for M is given as $$M=P\frac{r(1+r)^n}{(1+r)^n-1}$$
+
+Lets assume you cannot afford to pay the monthly mortgage payment calculcated in first part.  So you're interested in calculating diffrent M for different number of periods. Assume you want to calcultae M for periods between 10 and 25 years. Plot the corresping M values using `plot(x=n, y=M)`
+
+
+
+
+
+Assume you can pay 300 euro monthly. How many monthly payments have you to pay?
+Assume you consider different amounts of payments of 100,200,300,400,500,600,700,800,900 euro. Plot the number of months using `plot(x=M, y=n)`
+
+Lets assume you can only repay 650 euro. How many months have you to repay your mortgage? Note , that n can be calculated as 
+$$n=\frac{\ln \Big(\frac{i}{\frac{M}{P}-i}+1\Big)}{\ln(1+i)}$$
+
+
+Lets assume you would can consider repaying between 100 and 1000 euro monthly (in 10 euro steps). In how many months would you have repayed your mortgage? Plot the number of months using `plot(x=M, y=n)`. Explain what happens, if you choose to repay less then 500 euro?
+
+### Solutions:
+
+```{r}
+P <- 100000
+r <- 0.06/12
+n <- 15*12
+M <- P*(r*(1+r)^n)/((1+r)^n-1)
+print(M)
+
+
+P <- 100000
+r <- 0.06/12
+n <- seq(from=10, to=25)*12
+M <- P*(r*(1+r)^n)/((1+r)^n-1)
+plot(x=n, y=M)
+
+
+P <- 100000
+r <- 0.06/12
+M <- 650
+n <- log(r/(M/P-r)+1)/log(1+r)
+years <- n %/% 12
+months <- n %% 12
+print(years)
+print(months)
+
+
+P <- 100000
+r <- 0.06/12
+M <- seq(from=100, to=1000, by=10)
+n <- log(r/(M/P-r)+1)/log(1+r)
+plot(x=M, y=n)
+```
+
+### Exercise
+
+As a starting data scientist working at Lithuanian Airlines you are tasked to calculate the price for flights between Vilnius and Kaunas, Vilnius and Klaipeda and Vilnius Berlyn. Your boss gave you the following data:
+
+* Vilnius cooridinates: Lat: 54.6870458, Long: 25.2829111
+* Klaipeda Lat: 55.7127529, Long:21.1350469
+* Berlin: Lat:52.5170365, Long:13.3888599
+
+After googling for ["The Great-Circle distance"](https://en.wikipedia.org/wiki/Great-circle_distance) you find out, that  to calculate the distance, you set $\phi_1$,$\lambda_1$ and $\phi_2$, $\lambda_2$ to be the geographical latitude and longitude in radians of two points 1 and 2. 
+
+The geographical latitude and longitude in radians is calculated as $radians=degrees \times \frac{\pi}{180}$
+
+Then you have to calculate central angle between them using the formula:
+
+$$ \Delta \sigma =\arccos {\bigl (}\sin \phi _{1}\sin \phi _{2}+\cos \phi _{1}\cos \phi _{2}\cos(\Delta \lambda ){\bigr )}$$
+where $\Delta \lambda$ is tha absolute difference between two longitudes (use `abs()` function).
+Once the $\Delta \sigma$ is calcultaed, the distance can be calculated as $$d=r\Delta \sigma$$ with r as earth radius $r=6371$.
+
+
+The total cost of each flight is set to be: 
+* fixed cost (airport fee): 50 euro
+* variable cost: for a selected distance distance^(-0.5) per km of distance
+ 
+So the  break even price for the flight is calculated as $$BePrice= \text{fixed cost} + distance \times \text{variable cost}$$ 
+
+
+```{r}
+
+# Calculations for Vilnius --> Klaipeda
+phi_1 <- 54.6870458
+lambda_1 <- 25.2829111
+phi_2 <- 52.5170365
+lambda_2 <- 21.1350469
+
+phi_1 <- phi_1*pi/180
+phi_2 <- phi_2*pi/180
+lambda_1 <- lambda_1*pi/180
+lambda_2 <- lambda_2*pi/180
+
+delta_sigma <- acos(sin(phi_1)*sin(phi_2)+cos(phi_1)*cos(phi_2)*cos(abs(lambda_1-lambda_2)))
+distance <- delta_sigma*6371
+
+distance
+
+price_vln_klp <- 50+distance*distance^(-0.5)
+print(price_vln_klp)
+
+
+# Calculations for Vilnius --> Klaipeda
+phi_1 <- 54.6870458
+lambda_1 <- 25.2829111
+phi_2 <- 55.7127529
+lambda_2 <- 13.3888599
+
+phi_1 <- phi_1*pi/180
+phi_2 <- phi_2*pi/180
+lambda_1 <- lambda_1*pi/180
+lambda_2 <- lambda_2*pi/180
+
+delta_sigma <- acos(sin(phi_1)*sin(phi_2)+cos(phi_1)*cos(phi_2)*cos(abs(lambda_1-lambda_2)))
+distance <- delta_sigma*6371
+distance
+
+price_vln_bln <- 50+distance*distance^(-0.5)
+print(price_vln_bln)
+```
+
+## Vector functions
+Usually when applying a function to a vector, the function is applied element by element to the elements of the input vector and returns a result vector with the same length as the input vector.
+
+But some functions are functions that summaryse data. Most common ones are:
+
+*`min()` and `max()`
+* `mean()`, `median()`, `sd()` and `var()`
+* `length()`
+
+Many functions take additional arguments, that allow editing the result R retrieves. Check for example `?mean`. Function `mean()` has additional argument `trim` that allows trimming the input vector from both ends. Also the function has an argument `na.rm`, if set to TRUE, all `NA` in the vector will be ommited when appplying the function.
+
+```{r}
+# vector
+x <- c(-100,1,2,3,4,5,6,7,8,9,1000)
+
+mean(x)
+#triming 10% of elements at the bottom and top of the vector
+mean(x, trim = 0.1)
+
+#vector x with NA
+x <- c(-100,1,2,3,NA,5,6,7,8,9,1000)
+
+mean(x)
+# excluding NAs
+mean(x, na.rm = TRUE)
+# triming 10% of elements at the bottom and top of the vector
+mean(x, na.rm = TRUE, trim = 0.1)
+```
+
+Some functions, such as `cor()` can take multiple input vectors, e.g. calculating the correlation between two vectors. Check `?cor` for additional arguments the function can take. `cor()` can take different methods: method = c("pearson", "kendall", "spearman")), which the user should select depending on the needs. 
+
+```{r}
+# loading dataset airquality into R workspace
+data("airquality")
+
+# calculating the correlation between Wind and Temp 
+cor(airquality$Wind, airquality$Temp)
+
+# pearson is the standard use
+cor(airquality$Wind, airquality$Temp, method = "pearson")
+# kendall
+cor(airquality$Wind, airquality$Temp, method = "kendall")
+# spearman 
+cor(airquality$Wind, airquality$Temp, method = "spearman")
+
+
+```
+
+Sometimes you might need to check for `min` or `max` across multiple vectors, but the same positions within the vector, e.g. check if  3 element is greater in vector x or vector y.  `max(x,y)` would retrieve one number, the maximum of both vectors x and y. To run `min` and `max` parallel between two or more vectors use `pmin()` and `pmax()`.
+
+
+```{r}
+x <- c(1,9,2,11)
+y <- c(2,4,6,8)
+
+max(x,y)
+pmax(x,y)
+pmin(x,y)
+
+```
+
+
+## Rounding vector elements
+
+There are 5 functions that help user round the elements of the vector or the results of summarizing function.
+
+* `round()`
+* `floor()`
+* `ceiling()`
+* `truncate()`
+* `signif()`
+
+Check their all descriptions using `?round`
+
+```{r}
+x <- c(-1,-0.99,-.751,-.5,0,0.0013,0.1,0.499,0.5,0.999)
+x
+# rounding without arguments
+round(x)
+round(x,digits = 1)
+round(x,digits = 2)
+
+floor(x)
+ceiling(x)
+trunc(x)
+signif(x,digits = 2)
+```
+
+
+## Cumulative Sums, Products, and Extremes
+
+4 functions return a vector whose elements are the cumulative sums, products, minima or maxima of the elements of the argument. Check the description under `?cumsum`
+
+
+
+```{r}
+x <- c(1:3,0,10:12)
+
+cumsum(x)
+cummin(x)
+cummax(x)
+cumprod(x)
+```
+
+## Sorting or Ordering Vectors
+
+* `sort()` reorders a vector into ascending or descending order. See `?sort` for more information.
+* `order()` order returns a permutation which rearranges its first argument into ascending or descending order, breaking ties by further arguments
+* `rank()` returns the sample ranks of the values in a vector. Ties (i.e., equal values) and missing values can be handled in several ways.
+
+```{r}
+
+x <- c(1,3,5,0,2,7,2)
+sort(x)
+sort(x, decreasing = TRUE)
+
+order(x)
+order(x, decreasing = TRUE)
+
+rank(x)
+
+```
+
+
+
+### Exercises
+1. Load the dataset `AirPassengers` by using the command `data(AirPassengers)`, which contains monthly Airline Passenger Numbers 1949-1960. This dataset is a timeseries object, which will be covered in later lectures.
+Calculate:
+
+* the mean number of passengers between 1949-1960
+* the median number of passengers between 1949-1960
+* the minimum number of passengers between 1949-1960
+* the maximum number of passengers between 1949-1960
+* the standard deviation between 1949-1960
+
+Plot the cumulative sum of passengers  between 1949-1960 using `plot(..., type="l)` by substituting ... with the formula needed.
+
+
+
+2. What is the sum of highest 2 values in the vector: `c(1001,1000,99999,125,6898,12547,396845,15756)`?
+3. What is the sum of lowest 2 values in the vector: `c(1001,1000,99999,125,6898,12547,396845,15756)`?
+
+
+4. In Lithuania each parsons' income is deducted by a tax-free (NPD) amount, before being taxed with 20 percent income tax. The formula for tax-free (NPD) amount is $$NPD=400-0.19*(\text{monthly income}- MW)$$ where `MW` stands for the monthly minimum wage, which equals 607 euro. Calculate the after tax income (net_income) for the following set of income: `c(100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000)`.
+
+Some definitions:
+
+* NPD is the tax free amount $NPD=400-0.19*(\text{monthly income}- MW)$
+* taxable income is $income - NPD$
+* labor taxes equal $(income-NPD) \times 0.2$
+* net income $net_income=income-(income-NPD)\times 0.2$
+
+5. Calculate the tax wedge, which is defined as $taxation/income$
+
+
+### Solutions
+
+```{r}
+mean(AirPassengers)
+median(AirPassengers)
+min(AirPassengers)
+max(AirPassengers)
+sd(AirPassengers)
+
+plot(cumsum(AirPassengers), type="l")
+
+
+
+
+
+x <- c(1001,1000,99999,125,6898,12547,396845,15756)
+
+# read the second entry of the vector
+cumsum(sort(x, decreasing = TRUE))
+
+# read the second entry of the vector
+cumsum(sort(x))
+
+
+
+MW <- 607
+income <- c(100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000)
+inc_tax <- 0.2
+
+
+# after tax income is:
+# income - taxable_income *0.2
+# where as taxable income is
+# income - tax-free income
+# and tax free income is 
+# NPD=400-0.19*(income - MW)
+
+# lets start from the inside
+income-MW
+# for income < MW, values turn negative, lets set them to 0
+pmax(income-MW,0)
+# calculating tax-free income, values above 2700 turn negative:
+400-0.19*pmax(income-MW,0)
+# lets set them also to 0
+pmax(400-0.19*pmax(income-MW,0),0)
+# define this vector as NPD
+NPD <- pmax(400-0.19*pmax(income-MW,0),0)
+# calculate taxable income
+income-NPD
+# for income less then NPD, the values turn again negative, lets set them to 0
+pmax(income-NPD,0)
+
+net_income <- income - pmax(income-NPD,0)* inc_tax
+
+
+tax_wedge <- pmax(income-NPD,0)* inc_tax /income
+tax_wedge
+```
+
+## Vector logical testing
+
+Logical operators are :
+
+* `<`	less than
+* `<=` 	less than or equal to
+* `> `	greater than
+* `>=` 	greater than or equal to
+* `==` 	exactly equal to
+* `!=` 	not equal to
+* `!x` 	Not x 
+* `x | y` 	x OR y
+* `x & y` 	x AND y
+* `isTRUE(x)` 	test if X is TRUE 
+
+
+With R one can perform some logical tests on the elements of a vector (and on elements of other data structers as well) 
+
+```{r}
+x <- c(-9,-5,-3,0,1,5,7)
+x<0
+x<=0
+x==0
+x>=0
+x>0
+x!=0
+!(x==0)
+```
+
+
+```{r}
+x <- c(TRUE, FALSE, TRUE, FALSE)
+y <- c(TRUE, TRUE, FALSE, FALSE)
+a <- c(T,T)
+b <- c(F,F)
+
+x&y
+x&&y
+x|y
+x||y
+
+isTRUE(5>0)
+isTRUE(-5>0)
+```
+
+
+## Vector coersion
+
+
+```{r}
+a <- c(0L, 1L, 2L) # same as 0:2
+b <- c(0.1, 0.2, 5)
+c <- c("alfa", "beta", "gamma")
+d <- c(TRUE, FALSE)
+
+class(a)
+class(b)
+class(c)
+class(d)
+
+c(a,b)
+class(c(a,b))
+
+c(a,c)
+class(c(a,c))
+
+c(a,d)
+class(c(a,d))
+
+c(c,d)
+class(c(c,d))
+
+```
+
+
+
+
+```{r}
+a <- 1:5
+b <- 1:3
+c <- c("yes", "no")
+
+a+b
+a*b
+
+cbind(a,b)
+cbind(a,c)
+rbind(a,b)
+rbind(a,c)
+
+```
+
+
+## Subsetting
+
+* `subset`
+* `[]`
+* `[[]]`
+* `$`
+
+
+```{r}
+x <- 1:10
+y <- c("alpha", "beta", "gamma")
+x[1]
+x[3:6]
+x[c(3,4,5,6)]
+x[c(1,5,9)]
+x[x<=5]
+x[x<2&x>8]
+x[x<2|x>8]
+y[c(1,3)]
+```
+
+## Logical verctors
+
+```{r}
+x <- c(TRUE, TRUE, FALSE)
+
+as.numeric(x)
+
+sum(x)
+
+sum(!x)
+
+
+```
+
+## NAs and NANs
+
+```{r}
+
+x <- c(0,1,NA, 3, 4, NA)
+is.na(x)
+sum(is.na(x))
+sum(!is.na(x))
+
+
+
+```
